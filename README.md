@@ -6,7 +6,7 @@ Welcome to our GitHub repository! We're excited to develop an innovative game th
 ## Team Members
 - **[Titouan Lacombe--Fabre](https://github.com/Tit0u4N)** (L3 MIAGE, MIAGE Nice - Sophia)
 - **[Tamas Palotas](https://github.com/Shiyamii)** (Bachelor degree in computer science *BUT 3*, Nice)
-- **[Baptiste Lacroix](https://github.com/BaptisteLacroix)** (SI3 FISA computer science, Polytech Sophia)
+- **[Baptiste Lacroix](https://github.com/BaptisteLacroix)** (SI3 FISA, Diploma in computer engineering, Polytech Nice Sophia)
 
 ## Technology Stack
 Our project is built using a robust and modern technology stack to ensure a high-quality gaming experience:
