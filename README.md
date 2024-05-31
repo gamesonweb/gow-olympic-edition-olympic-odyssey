@@ -11,7 +11,7 @@ and [Baldur's Gate III](https://store.steampowered.com/app/1086940/Baldurs_Gate_
 > If you prefer to read this document in French, please scroll down to the [French Version 🇫🇷](#olympic-odyssey-).
 
 - [Repository Github](https://github.com/Tit0u4N/games-on-web-team-ficsit)
-- [Video Presentation](TODO)
+- [Video Presentation](https://youtu.be/Ws0oB_I-Yis)
 - [Team Members](#team-members)
 - [Technology Stack](#technology-stack)
 - [Key-development-points](#Key-development-points)
@@ -237,7 +237,7 @@ Inspiré par le jeu [For the King](https://store.steampowered.com/app/527230/For
 et [Baldur's Gate III](https://store.steampowered.com/app/1086940/Baldurs_Gate_3/) pour le gameplay.
 
 - [Repository Github](https://github.com/Tit0u4N/games-on-web-team-ficsit)
-- [Présentation Vidéo](TODO)
+- [Présentation Vidéo](https://youtu.be/Ws0oB_I-Yis)
 - [Membres de l'équipe](#membres-de-léquipe)
 - [Stack Technologique](#stack-technologique)
 - [Points-clés-du-développement](#point-clé-du-développement)
