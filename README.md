@@ -146,27 +146,41 @@ Une autre difficulté rencontré était la gestion des modals et des popups. Pou
 est un singleton et qui s'occupe de gérer casiment toutes els modal du jeu. En ayant une contrainte les classes voulant
 une modal devait implémenté l'interfacxe `Reactable` qui permeté de garantire la gestion de certaines méthodes.
 
-### Step 5 : Les animations 
-To enhance interactivity and attractiveness, we decided to implement animations for the 3D character models in the game. However, we encountered difficulties animating the characters in the game. Initially, we utilized the `importModel` global custom function to import 3D models along with their animations into the BabylonJS scene. Despite the presence of animations in the `AnimationGroups`, the characters appeared in a static pose (Blender), and no animations were triggered.
+### Step 5 : Les animations
 
-To address this issue, we refactored our approach and implemented a new function called `importMesh` inside the Pawn class. This function employs `SceneLoader.ImportMesh` to import the model and its animations. Here's how our approach evolved:
+To enhance interactivity and attractiveness, we decided to implement animations for the 3D character models in the game.
+However, we encountered difficulties animating the characters in the game. Initially, we utilized the `importModel`
+global custom function to import 3D models along with their animations into the BabylonJS scene. Despite the presence of
+animations in the `AnimationGroups`, the characters appeared in a static pose (Blender), and no animations were
+triggered.
 
-### Previous Approach (`importModel`):
+To address this issue, we refactored our approach and implemented a new function called `importMesh` inside the Pawn
+class. This function employs `SceneLoader.ImportMesh` to import the model and its animations. Here's how our approach
+evolved:
 
-The `importModel` function was responsible for importing 3D models into the scene. However, despite animations being present in the imported model, they were not triggered, and characters appeared static. We utilized `SceneLoader.ImportMeshAsync` for importing, expecting animations to function seamlessly.
+#### Previous Approach (`importModel`):
 
-### New Approach (`importMesh`):
+The `importModel` function was responsible for importing 3D models into the scene. However, despite animations being
+present in the imported model, they were not triggered, and characters appeared static. We
+utilized `SceneLoader.ImportMeshAsync` for importing, expecting animations to function seamlessly.
 
-In the revised approach, we introduced the `importMesh` function, leveraging `SceneLoader.ImportMesh`. This function imports the model and animations differently. Here's what changed:
+#### New Approach (`importMesh`):
 
-- **Mesh Parenting**: We created a parent mesh (`outer`) for the model and attached the model to it. This step was crucial as it provided a stable reference frame for animations to apply correctly.
+In the revised approach, we introduced the `importMesh` function, leveraging `SceneLoader.ImportMesh`. This function
+imports the model and animations differently. Here's what changed:
 
-- **Animation Handling**: We properly set up animations from the `AnimationGroups` obtained from the import. By directly accessing the `animationGroups` parameter of the import callback, we ensured that animations were correctly associated with the model.
+- **Mesh Parenting**: We created a parent mesh (`outer`) for the model and attached the model to it. This step was
+  crucial as it provided a stable reference frame for animations to apply correctly.
 
-### Impact:
+- **Animation Handling**: We properly set up animations from the `AnimationGroups` obtained from the import. By directly
+  accessing the `animationGroups` parameter of the import callback, we ensured that animations were correctly associated
+  with the model.
 
-By adopting the new approach, we successfully resolved the animation issue. Characters were now animated as intended, adding dynamism and immersion to the game world. The introduction of a parent mesh and proper animation setup significantly improved the integration of animations into our game, enhancing the overall gaming experience.
+#### Impact:
 
+By adopting the new approach, we successfully resolved the animation issue. Characters were now animated as intended,
+adding dynamism and immersion to the game world. The introduction of a parent mesh and proper animation setup
+significantly improved the integration of animations into our game, enhancing the overall gaming experience.
 
 ## Development Approach
 
