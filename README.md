@@ -56,8 +56,8 @@ Our project is built using a robust and modern technology stack to ensure a high
 
 ### The Idea
 
-To create our game, we wanted to stand out by choosing a different type of game. We decided to develop a resource
-management, strategy, and adventure game, inspired by titles like *For the King* and *Baldur's Gate III*.
+To create our game, we wanted to stand out by choosing a different type of game. We decided to develop a strategy, and 
+adventure game, inspired by titles like *For the King* and *Baldur's Gate III*.
 
 We envisioned a game board made up of hexagonal tiles, featuring two types of buildings:
 
@@ -157,7 +157,7 @@ ensure the management of certain methods.
 ### Step 5: Animations
 
 To enhance the interactivity and appeal of the game, we decided to implement animations for the 3D character models in
-the game. However, we encountered difficulties in animating the characters in the game. Initially, we used the global
+the game. However, we encountered difficulties in animating the characters in the game. Initially, we used the custom global
 function `importModel` to import 3D models with their animations into the BabylonJS scene. Despite the presence of
 animations in the `AnimationGroups`, the characters appeared in a static (Blender) pose, and no animation was triggered.
 
@@ -282,7 +282,8 @@ Notre projet est construit en utilisant une stack technologique robuste et moder
 
 ### L'idée de base
 
-Pour créer notre jeu, nous souhaitions nous démarquer en optant pour un type de jeu différent des autres. Nous avons donc décidé de développer un jeu de gestion de ressources, de stratégie et d'aventure, en nous inspirant de titres comme *For the King* et *Baldur's Gate III*.
+Pour créer notre jeu, nous souhaitions nous démarquer en optant pour un type de jeu différent des autres. 
+Nous avons donc décidé de développer un jeu de stratégie et d'aventure, en nous inspirant de titres comme *For the King* et *Baldur's Gate III*.
 
 Nous avons imaginé un plateau de jeu composé de cases hexagonales, avec deux types de bâtiments :
 
@@ -389,7 +390,7 @@ méthodes.
 
 Pour améliorer l'interactivité et l'attrait du jeu, nous avons décidé d'implémenter des animations pour les modèles de
 personnages en 3D dans le jeu. Cependant, nous avons rencontré des difficultés pour animer les personnages dans le jeu.
-Initialement, nous utilisions la fonction globale `importModel` pour importer des modèles 3D avec leurs animations dans
+Initialement, nous utilisions la fonction custom globale `importModel` pour importer des modèles 3D avec leurs animations dans
 la scène BabylonJS. Malgré la présence des animations dans les `AnimationGroups`, les personnages apparaissaient en pose
 statique (Blender), et aucune animation n'était déclenchée.
 
