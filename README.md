@@ -11,7 +11,13 @@ and [Baldur's Gate III](https://store.steampowered.com/app/1086940/Baldurs_Gate_
 - [Video Presentation](TODO)
 - [Team Members](#team-members)
 - [Technology Stack](#technology-stack)
-- [History, Details and Difficulties of the Development](#history-details-and-difficulties-of-the-development)
+- [Key-development-points](#Key-development-points)
+    - [Step 1: Generating the Map](#step-1-generating-the-map)
+    - [Step 2: The Dice](#step-2-the-dice)
+    - [Step 3: The Environment](#step-3-the-environment)
+    - [Step 4: React](#step-4-react)
+    - [Step 5: Animations](#step-5-animations)
+    - [Step 6: Movement](#step-6-movement)
 - [Development Approach](#development-approach)
     - [Package Management](#package-management)
     - [Getting Started](#getting-started)
@@ -47,140 +53,151 @@ Our project is built using a robust and modern technology stack to ensure a high
 
 ### The Idea
 
-Pour créer le jeu nous voulions partir sur un type de jeux différents des autres.
-Nous avons donc décidé de partir sur un jeu de gestion de ressources, de stratégie et d'aventure en s'inspirant de jeux
-comme For the King et Baldur's Gate III.
-Nous avons imaginé un plateau de jeu en case hexagonale avec deux types de batimens dessus :
+To create our game, we wanted to stand out by choosing a different type of game. We decided to develop a resource
+management, strategy, and adventure game, inspired by titles like *For the King* and *Baldur's Gate III*.
 
-- Les centre d'entrainement qui permettent d'améliorer les compétences de nos athlètes
-- Les arenes qui permettent de combattre d'autres équipes pour gagner des objets
+We envisioned a game board made up of hexagonal tiles, featuring two types of buildings:
 
-Puis nous avons imaginé une compétitions final représentant les JO a la fin du jeux. Sous forme d'énorme tournois
-réunissant tout les sport.
+- Training centers, which allow our athletes to improve their skills.
+- Arenas, where teams can battle other teams to win items.
 
-## Point clé du développement
+Then, we imagined a final competition representing the Olympic Games after four years. The goal is to earn the most
+points. There is a tournament for each sport to accumulate points. Each team is composed of three athletes, and the
+ranking is done by team.
 
-### Step 1 : Génération de la map
+## Key development points
 
-Pour génerer la map nous avons utilisée le bruit de perlin puis en addition un algorithm afin de donner une forme d'ile
-a notre map.
-Pour cela nous avons utilisée une librairie nodeJS 'tumult' qui permet de générer des bruits de perlin.
-Afin de pouvoir utiliser la librairie dans notre projet nous avons du encapsuler le code dans une class Noise en
-typescript.
+### Step 1: Generating the Map
 
-<p align="center">
-  <img src="./images/perlin_1.png" alt="Image bruit de perlin" width="35%" />
-  <img src="./images/perlin_2.png" alt="Image bruit de perlin" width="55%" />
-  <img src="./images/perlin_3.png" alt="Image bruit de perlin" width="90%" />
-</p>
-
-Afin de générer la map comme nous le souhaitions nous avons ajuster l'algorythme jusqu'a obtenir le résultat souhaité.
-
-### Step 2 : Le dé
-
-Le lancer de dé étant le coeur nous avons décidé de donner au joeuur deux possiblilié :
-
-#### Lancement de dé 2D
-
-Nous avons en premier lieu créer une facon de lancé le dé en 2D étant plus rapide.
-<p align="center">
-  <img src="./images/dice_2d.png" alt="Image bruit de perlin" width="80%" />
-</p>
-
-#### Lancement de dé 3D
-
-Puis nous avons décidé de créer un lancer de dé en 3D pour rendre le jeu plus immersif. Pour cela il falait activé la
-physique dans babylon js via Havok.
-Ce fut un sdes plus gros problème a gérer car Havok et codé en wasm (WebAssembly) et donc il falait gérer sont
-chargement en asyncrhone au début du jeu.
-De plus l'ajout d'un plugin wasm a ViteJS etait de mise.
+To generate the map, we used Perlin noise and then added an algorithm to give our map an island shape.
+For this, we used a Node.js library called 'tumult' which allows generating Perlin noise.
+To use the library in our project, we encapsulated the code in a `Noise` class in TypeScript.
 
 <p align="center">
-  <img src="./images/dice_3d_1.png" alt="Image bruit de perlin" width="40%" />
-  <img src="./images/dice_3d_2.png" alt="Image bruit de perlin" width="55%" />
+  <img src="./images/perlin_1.png" alt="Perlin Noise Image" width="35%" />
+  <img src="./images/perlin_2.png" alt="Perlin Noise Image" width="55%" />
+  <img src="./images/perlin_3.png" alt="Perlin Noise Image" width="90%" />
 </p>
 
-Une fois la physique activé nous avons pu créer un dé en 3D et le lancer. Mais la texture du dé ainsi que la détection
-de la face du dé "gagnante" fut un autre problème a gérer.
-Pour ce qui est de la texture nous avons du faire face au FaceUV qui était totalement inversé par rapport a ce que nous
-voulions (pas d'image d'archive). Pour régler ce problème nous avons tricher car au lieux de remettre les faceUV a "
-l'endroit" via une formule mathématique nous avons inverser le sens de la texture.
+To generate the map as we wanted, we adjusted the algorithm until we achieved the desired result.
 
-Pour ce qui est de la détection de la face "gagnante" nous avons texter plusieurs méthodes, en premier lieux nous
-voulions detecter la face dont le vecteur pointer vers le haut mais du a un trop au taux d'erreur nous nous sommes
-rabbatu sur une méthode plus simple de seulement detecter la face la plus haute, il peux encore y avoir des erreurs mais
-la marge d'erreur est beaucoup plus faible. Malheureusement nous n'avons l'image d'achives pur monter les débuts des
-essais avec les thinInstance qui était plutot rigolo
+### Step 2: The Dice
 
-### Step 3 : Les décors
+As dice rolling is at the heart of the game, we decided to give the player two options:
 
-Pour les décors nous avons décidé de partir sur un style cartoon pour rendre le jeu plus fun et plus accessible.
-Pour cela le low poly était un bon choix car il est plus simple à mettre en place pour nous n'étant pas experimenté en
-3D.
+#### 2D Dice Roll
+
+We first created a way to roll the dice in 2D, which is faster.
+<p align="center">
+  <img src="./images/dice_2d.png" alt="2D Dice Roll" width="80%" />
+</p>
+
+#### 3D Dice Roll
+
+Next, we decided to create a 3D dice roll to make the game more immersive. For this, we needed to enable physics in
+Babylon.js via Havok.
+This was one of the biggest challenges because Havok is coded in WebAssembly (Wasm), so we had to handle its
+asynchronous loading at the start of the game.
+Additionally, adding a Wasm plugin to ViteJS was necessary.
 
 <p align="center">
-  <img src="./images/decors_1.png" alt="Image bruit de perlin" width="98%" />
+  <img src="./images/dice_3d_1.png" alt="3D Dice Roll" width="40%" />
+  <img src="./images/dice_3d_2.png" alt="3D Dice Roll" width="55%" />
 </p>
 
-La majors partie de nos décors était des arbres et des rochers que nous avons créer en utilisant Blender. Pour les
-baptiments nous avons utilisé des modèles 3D gratuits que nous avons trouvé sur internet.
-Les bapiment n'ont pas posée problème étant donnéer qu'il y en avait peu.
+Once the physics were enabled, we were able to create and roll a 3D dice. However, the dice texture and the detection of
+the "winning" face were issues to resolve.
+For the texture, we faced inverted FaceUVs compared to what we wanted. To fix this, we reversed the texture direction
+instead of recalculating the FaceUVs with a mathematical formula.
 
-Pour ce qui est des arbres et des rochers il y en avait énormément d'objets 3D jusqu'a 18400 arbres et 3350 rochers
-environ. De créer directement des objets 3D demandant beacuoup de ressource nous avons décidé de créer des instances de
-ces objets et plus exactement des "ThinInstance" permmetant de créer des copies d'un même objet 3D sans prendre de
-ressource supplémentaire. Mais les "ThinInstance" nous empechès aussi de gérer des clicks ou de gérer les objets
-indépendement pour cela nous avons créer une class Decor qui nous permet de gérer tout les aspect de nos decors et
-d'encréer plusieur version afin de montrer plmusieurs arbe différent (forme, taille, rotation).
+For detecting the "winning" face, we tested several methods. Initially, we wanted to detect the face whose vector
+pointed upwards, but due to a high error rate, we switched to a simpler method of detecting the highest face. There may
+still be errors, but the margin of error is much lower.
 
-### Step 4 : React
+### Step 3: The Environment
 
-Pour construire notre interface utilisateur nous avons décidé d'utiliser React pour sa simplicité et sa facilité. Mais
-React a un fil d'execution bien a lui et il devient très capricieux lorsque nous voulons en sortir. Heureusement
-les `useState` sont des fonctions et donc peuvent facilement être transmise dans une fonction hors d'un composant react.
-Dans 95% des cas cette facon de faire marcher et permerter a react de ce mettre a jour automatiquement. Mais dans
-certain cas comme le chargement du moteur physique Havok ou la création de la map nous avons du utiliser des `useEffect`
-avec un `setTimeout` pour forcer react a ce mettre a jour.
+For the environment, we decided to adopt a cartoon style to make the game more fun and accessible.
+Low poly was a good choice as it is simpler to implement for us who are not experienced in 3D.
 
-Une autre difficulté rencontré était la gestion des modals et des popups. Pour cela nous avons créer une class Modal qui
-est un singleton et qui s'occupe de gérer casiment toutes els modal du jeu. En ayant une contrainte les classes voulant
-une modal devait implémenté l'interfacxe `Reactable` qui permeté de garantire la gestion de certaines méthodes.
+<p align="center">
+  <img src="./images/decors_1.png" alt="Environment" width="98%" />
+</p>
 
-### Step 5 : Les animations
+Most of our environment assets were trees and rocks that we created using Blender. For the buildings, we used free 3D
+models found online.
+The buildings were not an issue as there were few of them.
 
-To enhance interactivity and attractiveness, we decided to implement animations for the 3D character models in the game.
-However, we encountered difficulties animating the characters in the game. Initially, we utilized the `importModel`
-global custom function to import 3D models along with their animations into the BabylonJS scene. Despite the presence of
-animations in the `AnimationGroups`, the characters appeared in a static pose (Blender), and no animations were
-triggered.
+For the trees and rocks, there were a lot of 3D objects, up to about 18,400 trees and 3,350 rocks. Creating these 3D
+objects directly required a lot of resources, so we decided to create instances of these objects, specifically "
+ThinInstance", allowing us to create copies of the same 3D object without consuming additional resources. However, "
+ThinInstance" prevented us from handling clicks or managing objects independently. To address this, we created a `Decor`
+class that allowed us to manage all aspects of our environment and create multiple versions to show different trees (
+shape, size, rotation).
 
-To address this issue, we refactored our approach and implemented a new function called `importMesh` inside the Pawn
-class. This function employs `SceneLoader.ImportMesh` to import the model and its animations. Here's how our approach
+<p align="center">
+  <img src="./images/decors_2.png" alt="Environment" width="98%" />
+  Images of trees and rocks during the early implementation (a bit demoralizing)
+</p>
+
+### Step 4: React
+
+To build our user interface, we decided to use React for its simplicity and ease of use. However, React has its own
+execution thread and becomes very finicky when we want to step outside of it. Fortunately, `useState` are functions and
+can easily be passed into a function outside a React component.
+In 95% of cases, this method works and allows React to update automatically. But in some cases, such as loading the
+Havok physics engine or creating the map, we had to use `useEffect` with a `setTimeout` to force React to update.
+
+Another challenge was managing modals and popups. For this, we created a `Modal` class that is a singleton and manages
+almost all the game's modals. With a constraint, classes wanting a modal had to implement the `Reactable` interface to
+ensure the management of certain methods.
+
+### Step 5: Animations
+
+To enhance the interactivity and appeal of the game, we decided to implement animations for the 3D character models in
+the game. However, we encountered difficulties in animating the characters in the game. Initially, we used the global
+function `importModel` to import 3D models with their animations into the BabylonJS scene. Despite the presence of
+animations in the `AnimationGroups`, the characters appeared in a static (Blender) pose, and no animation was triggered.
+
+To solve this problem, we rethought our approach and implemented a new function called `importMesh` within the `Pawn`
+class. This function uses `SceneLoader.ImportMesh` to import the model and its animations. Here’s how our approach
 evolved:
 
 #### Previous Approach (`importModel`):
 
-The `importModel` function was responsible for importing 3D models into the scene. However, despite animations being
-present in the imported model, they were not triggered, and characters appeared static. We
-utilized `SceneLoader.ImportMeshAsync` for importing, expecting animations to function seamlessly.
+The `importModel` function was responsible for importing 3D models into the scene. However, despite the presence of
+animations in the imported model, they were not triggered, and the characters appeared static. We
+used `SceneLoader.ImportMeshAsync` for the import, hoping the animations would work without issue.
 
 #### New Approach (`importMesh`):
 
-In the revised approach, we introduced the `importMesh` function, leveraging `SceneLoader.ImportMesh`. This function
-imports the model and animations differently. Here's what changed:
+In the revised approach, we introduced the `importMesh` function, using `SceneLoader.ImportMesh`. This function imports
+the model and animations differently. Here’s what changed:
 
-- **Mesh Parenting**: We created a parent mesh (`outer`) for the model and attached the model to it. This step was
-  crucial as it provided a stable reference frame for animations to apply correctly.
+- **Parenting Meshes**: We created a parent mesh (`outer`) for the model and attached the model to this parent. This
+  step was crucial as it provided a stable reference frame for the animations to apply correctly.
 
-- **Animation Handling**: We properly set up animations from the `AnimationGroups` obtained from the import. By directly
-  accessing the `animationGroups` parameter of the import callback, we ensured that animations were correctly associated
-  with the model.
+- **Managing Animations**: We properly configured the animations from the `AnimationGroups` obtained during the import.
+  By directly accessing the `animationGroups` parameter in the import callback, we ensured the animations were correctly
+  associated with the model.
 
 #### Impact:
 
-By adopting the new approach, we successfully resolved the animation issue. Characters were now animated as intended,
-adding dynamism and immersion to the game world. The introduction of a parent mesh and proper animation setup
-significantly improved the integration of animations into our game, enhancing the overall gaming experience.
+By adopting the new approach, we successfully resolved the animation issue. The characters are now animated as expected,
+adding dynamism and immersion to the game world. The introduction of a parent mesh and proper animation configuration
+significantly improved the integration of animations in our game, enhancing the overall gaming experience.
+
+### Step 6: Movement
+
+To move our characters, we had to create a movement system. For this, we used a graph defined across the entire map that
+defines possible movements and movement costs. For this, we used the `data-structures` library, which allows easy
+creation of graphs. Once the graph was created, it had to be displayed in 3D without being too heavy on calculations.
+
+<p align="center">
+  <img src="./images/displacement_1.png" alt="Character Movement" width="70%" />
+</p>
+
+Thanks to the library, we could easily determine all reachable tiles within a certain number of movement points. Once
+these tiles were defined, they just needed to be made clickable, and the character would move to them.
 
 ## Development Approach
 
