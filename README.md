@@ -1,5 +1,9 @@
 # Olympic Odyssey
 
+<p align="center">
+  <img src="./images/logo.png" alt="Logo of our project" width="20%" />
+</p>
+
 ## Overview
 
 Welcome we're excited to develop an innovative game that combines management,
